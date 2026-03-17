@@ -1,0 +1,85 @@
+﻿@model IEnumerable<OnlineMarketplace.Models.Product>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0">
+        <i class="bi bi-grid"></i> All Products
+    </h3>
+    <a class="btn btn-primary rounded-3" asp-action="Create">
+        <i class="bi bi-plus-lg"></i> Post New Ad
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="bi bi-inbox text-muted" style="font-size:3rem;"></i>
+        <h5 class="mt-3 text-muted">No products listed yet</h5>
+        <a asp-action="Create" class="btn btn-primary mt-2">Post First Ad</a>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-6 col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 shadow-sm border-0 rounded-4">
+
+                    <a asp-action="Details" asp-route-id="@item.Id"
+                           class="text-decoration-none">
+
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="@item.ImagePath" class="card-img-top"
+                                 style="height:160px; object-fit:cover;
+                            border-radius:12px 12px 0 0;" />
+                        }
+                        else
+                        {
+                            <div class="bg-light text-center rounded-top"
+                                 style="height:160px; line-height:160px;">
+                                <i class="bi bi-image text-muted"
+                                   style="font-size:2rem;"></i>
+                            </div>
+                        }
+
+                        <div class="card-body p-2">
+                            <p class="text-success fw-bold mb-1">₹@item.Price</p>
+                            <h6 class="text-dark mb-1"
+                                style="font-size:0.9rem; white-space:nowrap;
+                                overflow:hidden; text-overflow:ellipsis;">
+                                @item.Title
+                            </h6>
+                            <small class="text-muted">
+                                <i class="bi bi-geo-alt"></i> @item.City
+                            </small>
+                        </div>
+
+                    </a>
+
+                    <div class="card-footer p-2 d-flex justify-content-between
+                        align-items-center border-0 bg-white rounded-bottom">
+                        <small class="text-muted">
+                            @item.CreatedDate.ToShortDateString()
+                        </small>
+                        <div class="d-flex gap-1">
+                            <a class="btn btn-sm btn-warning rounded-2"
+                                   asp-action="Edit" asp-route-id="@item.Id">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a class="btn btn-sm btn-danger rounded-2"
+                                   asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}

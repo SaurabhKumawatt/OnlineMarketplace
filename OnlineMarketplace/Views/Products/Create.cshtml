@@ -1,0 +1,103 @@
+﻿@model OnlineMarketplace.Models.Product
+
+@{
+    ViewData["Title"] = "Post New Ad";
+}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-4">
+
+                <h3 class="fw-bold mb-1" style="color:#3a77ff;">
+                    <i class="bi bi-plus-circle"></i> Post New Ad
+                </h3>
+                <p class="text-muted mb-4">Fill in the details to list your product</p>
+
+                <form asp-action="Create" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger py-2"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Title" class="form-control"
+                               placeholder="Product Title" />
+                        <label asp-for="Title">
+                            <i class="bi bi-card-text"></i> Product Title
+                        </label>
+                        <span asp-validation-for="Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-semibold">
+                            <i class="bi bi-text-left"></i> Description
+                        </label>
+                        <textarea asp-for="Description" class="form-control"
+                                  rows="4"
+                                  placeholder="Describe your product..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Price" class="form-control" placeholder="Price" />
+                        <label asp-for="Price">
+                            <i class="bi bi-currency-rupee"></i> Price (₹)
+                        </label>
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="City" class="form-control" placeholder="City" />
+                        <label asp-for="City">
+                            <i class="bi bi-geo-alt"></i> City
+                        </label>
+                        <span asp-validation-for="City" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-tag"></i> Category
+                        </label>
+                        <select asp-for="CategoryId" class="form-select"
+                                asp-items="ViewBag.Categories">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-images"></i> Product Images
+                            <span class="text-muted small">(Minimum 1)</span>
+                        </label>
+                        <input type="file" name="ImageFiles" class="form-control"
+                               multiple required accept="image/*" />
+                        <div class="form-text">
+                            You can select multiple images
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-3">
+                            <i class="bi bi-check-circle"></i> Post Ad
+                        </button>
+                        <a asp-controller="Home" asp-action="Index"
+                               class="btn btn-outline-secondary rounded-3">
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

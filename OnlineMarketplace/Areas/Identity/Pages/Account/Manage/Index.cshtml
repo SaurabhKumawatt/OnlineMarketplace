@@ -1,0 +1,98 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "My Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-7 col-lg-5">
+
+        <div class="card border-0 shadow rounded-4">
+            <div class="card-body p-4">
+
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <div class="rounded-circle text-white d-inline-flex
+                        align-items-center justify-content-center mb-3"
+                         style="width:70px; height:70px;
+                        background: linear-gradient(135deg, #3a77ff, #00c6ff);
+                        font-size:1.8rem;">
+                        <i class="bi bi-person"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">My Profile</h4>
+                    <small class="text-muted">@Model.Username</small>
+                </div>
+
+                <!-- Status Message -->
+                @if (!string.IsNullOrEmpty(Model.StatusMessage))
+                {
+                    <div class="alert alert-success rounded-3 py-2 text-center small">
+                        <i class="bi bi-check-circle"></i> @Model.StatusMessage
+                    </div>
+                }
+
+                <form id="profile-form" method="post">
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger py-2 small"></div>
+
+                    <!-- Email (readonly) -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Username" class="form-control bg-light"
+                               placeholder="Email" disabled />
+                        <label asp-for="Username">
+                            <i class="bi bi-envelope"></i> Email
+                        </label>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.FullName" class="form-control"
+                               placeholder="Full Name" />
+                        <label asp-for="Input.FullName">
+                            <i class="bi bi-person"></i> Full Name
+                        </label>
+                        <span asp-validation-for="Input.FullName"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-floating mb-4">
+                        <input asp-for="Input.PhoneNumber" class="form-control"
+                               placeholder="Phone Number" />
+                        <label asp-for="Input.PhoneNumber">
+                            <i class="bi bi-telephone"></i> Phone Number
+                        </label>
+                        <span asp-validation-for="Input.PhoneNumber"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit"
+                                class="btn btn-primary btn-lg fw-bold rounded-3">
+                            <i class="bi bi-check-circle"></i> Save Changes
+                        </button>
+                        <a asp-controller="Home" asp-action="Index"
+                               class="btn btn-outline-secondary rounded-3">
+                            <i class="bi bi-house"></i> Back to Home
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Change Password Link -->
+        <div class="text-center mt-3">
+            <a asp-page="./ChangePassword" class="text-muted small">
+                <i class="bi bi-lock"></i> Change Password
+            </a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
